@@ -18,7 +18,7 @@ searchBtn.addEventListener("click", async () => {
   //fetch sends the request to the API
   const res = await fetch(
     //contains the search term
-    `https://movie-database-api1.p.rapidapi.com/list_movies.json?limit=15&page=1&query_term=${movieInput}`,
+    `https://movie-database-api1.p.rapidapi.com/list_movies.json?limit=20&page=1&query_term=${movieInput}`,
     {
       //headers required by API Service to authenticate the request...
       headers: {
