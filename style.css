@@ -1,133 +1,219 @@
- h1 {
-     font-family: Arial, Helvetica, sans-serif;
-     -webkit-text-stroke: 1px black;
-     -webkit-text-fill-color: white;
-     text-align: center;
- }
-
- header {
-     background-color: #000000;
-     text-align: center;
-     font-size: 50px;
-     color: white;
-     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     z-index: 1000;
-     padding: 5px;
-
- }
-
-
- body {
-     font-family: Arial, sans-serif;
-     padding-top: 80px;
-     background: #f4f4f4;
-     background-image: url("cinemaimg.jpg");
-     background-size: cover;
-     background-repeat: no-repeat;
- }
-
-
- #movies {
-     display: grid;
-     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-     gap: 20px;
-     padding: 10px;
- }
-
- .movie {
-     background: white;
-     padding: 15px;
-     border-radius: 10px;
-     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-     transition: transform 0.2s ease-in-out;
-     overflow: hidden;
- }
+*::before,
+*::after {
+    box-sizing: border-box;
+}
 
 
 
+root {
+    /* Header/Footer sizing that adapts */
+    --header-h: 64px;
+    --footer-h: 36px;
 
- .input-container {
-     position: relative;
-     width: 100%;
-     max-width: 400px;
-     /* Center the container horizontally */
-     margin: 20px auto;
- }
+    /* Page width + spacing */
+    --page-max: 1200px;
+    --pad: 16px;
+}
 
- .clearm {
-     margin-top: 10px;
- }
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-text-stroke: 1px black;
+    -webkit-text-fill-color: white;
+    text-align: center;
+}
 
- input#movieInput {
-     width: 100%;
-     height: 40px;
-     padding: 10px;
-     /* extra space on the right for the icon */
-     border: 2.5px solid black;
-     font-size: 14px;
-     letter-spacing: 2px;
-     transition: 0.2s linear;
+header {
+    background-color: #000000;
+    text-align: center;
+    font-size: 50px;
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 5px;
 
- }
-
- input#movieInput:focus {
-     outline-color: rgb(218, 54, 54);
- }
-
-
- .fa-solid {
-     position: absolute;
-     right: 10px;
-     top: 35%;
-     transform: translateY(-50%);
-     max-width: 50px;
-     cursor: pointer;
- }
+}
 
 
+body {
+    font-family: Arial, sans-serif;
+    padding-top: 80px;
+    background: #f4f4f4;
+    background-image: url("cinemaimg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0;
 
- .movie-head {
-     width: 50px;
-     height: auto;
- }
+}
 
 
- .movie img {
-     width: 100%;
-     border-radius: 8px;
-     margin-bottom: 10px;
- }
+#movies {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: var(--pad);
+}
 
-
- .fav-btn {
-     background-color: #ff4b5c;
-     border: none;
-     color: white;
-     padding: 8px 12px;
-     border-radius: 8px;
-     cursor: pointer;
-     margin-top: 10px;
-     transition: 0.3s;
- }
-
- .fav-btn:hover {
-     background-color: #ff2d47;
- }
+.movie {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden;
+}
 
 
 
- footer {
-     position: fixed;
-     left: 0;
-     bottom: 0;
-     width: 100%;
-     color: white;
-     background-color: black;
-     padding: 1px;
+
+.input-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    /* Center the container horizontally */
+    margin: 20px auto;
+}
+
+
+.clear-btn{
+    position: absolute;
+    top: 35%;
+    transform: translateY(-32%);
+    padding: 5px 10px;
+    margin-left: 5px;
+    background-color: #fa2003;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+
+input#movieInput {
+    width: 100%;
+    height: 40px;
+    padding-right: 10px;
+    border: 2.5px solid black;
+    font-size: 14px;
+    letter-spacing: 2px;
+    transition: 0.2s linear;
      text-align: center;
 
- }
+}
+
+input#movieInput:focus {
+    outline-color: rgb(218, 54, 54);
+}
+
+
+.fa-solid {
+    position: absolute;
+    right: 10px;
+    top: 45%;
+    transform: translateY(-50%);
+    max-width: 50px;
+    cursor: pointer;
+}
+
+
+
+.movie-head {
+    width: 50px;
+    height: auto;
+}
+
+
+.movie img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+
+.fav-btn {
+    background-color: #ff4b5c;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.fav-btn:hover {
+    background-color: #ff2d47;
+}
+
+
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    background-color: black;
+    padding: 1px;
+    text-align: center;
+
+}
+
+
+/* ====== Phone ====== */
+@media (max-width: 600px) {
+
+    header {
+        font-size: 25px;
+    }
+
+
+    .input-container {
+        max-width: 320px;
+        /* slightly smaller on phones */
+        padding: 0 16px;
+    }
+
+    input#movieInput {
+        margin-top: 50px;
+        padding-top: 20px;
+        width: 100%;
+    }
+
+    .fa-solid{
+        top: 75%;
+    }
+
+    .clear-btn{
+        top: 75%;
+    }
+
+
+
+
+}
+
+/* ====== Tablet ====== */
+@media (min-width: 601px) and (max-width: 1024px) {
+    :root {
+        --header-h: 64px;
+        --footer-h: 36px;
+        --pad: 16px;
+    }
+
+    #movies {
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+}
+
+/* ====== Large desktop ====== */
+@media (min-width: 1200px) {
+    #movies {
+        gap: 22px;
+    }
+}
