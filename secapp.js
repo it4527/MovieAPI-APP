@@ -4,7 +4,45 @@ const moviesDiv = document.getElementById("movies");
 const clearBtn = document.getElementById("clear");
 const movieInput = document.getElementById("movieInput");
 
+// Global variable to store all movies
 let allMovies = [];
+
+//Favorite movies array to store the user's favorite movies
+const FAVORITES_KEY = "favorites";
+
+function getFavorites() {
+  return JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]");
+}
+
+function setFavorites(favs) {
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
+}
+
+
+
+moviesDiv.addEventListener("click", (e) => {
+  const btn = e.target.closest(".fav-btn");
+  if (!btn) return;
+  console.log("FAV CLICKED id=", btn.dataset.id);
+  const id = btn.dataset.id;
+  const movie = allMovies.find((m) => String(m.id) === String(id));
+  if (!movie) return;
+  const favs = getFavorites();
+
+
+  //push only the necessary movie details to favorites, not the entire movie object to local storage
+  favs.push({
+    id: movie.id,
+    title: movie.title,
+    year: movie.year,
+    image: movie.image,
+    rating: movie.rating,
+    genre: movie.genre,
+    rank: movie.rank,
+  });
+
+  setFavorites(favs);
+});
 
 // Fetch IMDb Top 100 Movies once when page loads
 async function loadTopMovies() {
@@ -54,7 +92,6 @@ function displayMovies(movies) {
 // When user clicks Search button
 searchBtn.addEventListener("click", async () => {
   const searchTerm = movieInput.value.trim().toLowerCase();
-
   // Load data if not already fetched
   if (allMovies.length === 0) {
     await loadTopMovies(); //waiting the movies to be fetched
@@ -62,7 +99,7 @@ searchBtn.addEventListener("click", async () => {
 
   // Filter movies by search term
   const filtered = allMovies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchTerm)
+    movie.title.toLowerCase().includes(searchTerm),
   );
 
   displayMovies(filtered);
@@ -81,5 +118,3 @@ clearBtn.addEventListener("click", function () {
   moviesDiv.innerHTML = "";
   movieInput.value = "";
 });
-
-

@@ -20,6 +20,8 @@ h1 {
     -webkit-text-stroke: 1px black;
     -webkit-text-fill-color: white;
     text-align: center;
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
+    -webkit-text-fill-color: rgb(255, 255, 255);
 }
 
 header {
@@ -59,11 +61,12 @@ body {
 }
 
 .movie {
-    background: white;
+    background: rgba(255, 255, 255, 0.795);
+    justify-items: center;
     padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+    border: 2px solid black;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
@@ -79,7 +82,7 @@ body {
 }
 
 
-.clear-btn{
+.clear-btn {
     position: absolute;
     top: 35%;
     transform: translateY(-32%);
@@ -102,7 +105,7 @@ input#movieInput {
     font-size: 14px;
     letter-spacing: 2px;
     transition: 0.2s linear;
-     text-align: center;
+    text-align: center;
 
 }
 
@@ -132,6 +135,9 @@ input#movieInput:focus {
     width: 100%;
     border-radius: 8px;
     margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -151,6 +157,46 @@ input#movieInput:focus {
 }
 
 
+.fav-view {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #181717;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+
+}
+
+.search-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #181717;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+
+}
+
+.btn-clearfav {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #fa2003;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+
+}
+
+.favorites-movies {
+    justify-content: center;
+    display: flex;
+    margin-top: 20px;
+}
+
+
 
 footer {
     position: fixed;
@@ -161,7 +207,6 @@ footer {
     background-color: black;
     padding: 1px;
     text-align: center;
-
 }
 
 
@@ -185,11 +230,11 @@ footer {
         width: 100%;
     }
 
-    .fa-solid{
+    .fa-solid {
         top: 75%;
     }
 
-    .clear-btn{
+    .clear-btn {
         top: 75%;
     }
 
