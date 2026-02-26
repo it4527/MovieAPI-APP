@@ -18,8 +18,6 @@ function setFavorites(favs) {
   localStorage.setItem(FAVORITES_KEY, JSON.stringify(favs));
 }
 
-
-
 moviesDiv.addEventListener("click", (e) => {
   const btn = e.target.closest(".fav-btn");
   if (!btn) return;
@@ -28,7 +26,6 @@ moviesDiv.addEventListener("click", (e) => {
   const movie = allMovies.find((m) => String(m.id) === String(id));
   if (!movie) return;
   const favs = getFavorites();
-
 
   //push only the necessary movie details to favorites, not the entire movie object to local storage
   favs.push({
@@ -42,7 +39,19 @@ moviesDiv.addEventListener("click", (e) => {
   });
 
   setFavorites(favs);
+
+  showToast("Movie added to favorites!");
 });
+
+//alert when saving a movie to favorites
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.className = "show";
+  setTimeout(() => {
+    toast.className = toast.className.replace("show", "");
+  }, 2500);
+}
 
 // Fetch IMDb Top 100 Movies once when page loads
 async function loadTopMovies() {
@@ -117,4 +126,5 @@ movieInput.addEventListener("keydown", (event) => {
 clearBtn.addEventListener("click", function () {
   moviesDiv.innerHTML = "";
   movieInput.value = "";
+ 
 });

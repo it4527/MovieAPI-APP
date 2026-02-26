@@ -197,6 +197,27 @@ input#movieInput:focus {
 }
 
 
+#toast {
+  position: fixed;
+  bottom: 25px;
+  right: 20px;
+  background: #222;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.3s;
+  font-weight: bold;
+  z-index: 999;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 
 footer {
     position: fixed;
