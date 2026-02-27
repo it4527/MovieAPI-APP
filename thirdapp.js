@@ -3,6 +3,57 @@ const searchBtn = document.getElementById("searchBtn");
 const moviesDiv = document.getElementById("movies");
 const clearBtn = document.getElementById("clear");
 const movieInput = document.getElementById("movieInput");
+const CACHE_KEY = "moviesCache"; // stores array
+const STATE_KEY = "moviesState"; // stores visibleCount/search/scroll
+
+// Save current state to sessionStorage before navigating away
+function saveState() {
+  // cache movies list (so going back doesn't require refetch)
+  if (Array.isArray(allMovies) && allMovies.length) {
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(allMovies));
+  }
+
+  sessionStorage.setItem(
+    STATE_KEY,
+    JSON.stringify({
+      visibleCount,
+      searchTerm: movieInput.value || "",
+      scrollY: window.scrollY,
+    }),
+  );
+}
+
+// Try to restore state from sessionStorage, returns true if successful - previous search results will be shown without refetching, and scroll position will be restored
+function restoreStateIfAny() {
+  const cached = sessionStorage.getItem(CACHE_KEY);
+  const stateRaw = sessionStorage.getItem(STATE_KEY);
+
+  if (!cached || !stateRaw) return false;
+
+  try {
+    allMovies = JSON.parse(cached);
+    const state = JSON.parse(stateRaw);
+
+    movieInput.value = state.searchTerm || "";
+    visibleCount = Number(state.visibleCount) || STEP;
+
+    const term = (state.searchTerm || "").trim().toLowerCase();
+    const list = term
+      ? allMovies.filter((m) =>
+          (m.primaryTitle || m.originalTitle || "")
+            .toLowerCase()
+            .includes(term),
+        )
+      : allMovies;
+
+    displayMovies(list, { resetCount: false }); // important: keep visibleCount
+    requestAnimationFrame(() => window.scrollTo(0, Number(state.scrollY) || 0));
+    return true;
+  } catch {
+    return false;
+  }
+}
+//////////////END of MAIN logic for state management/////////////////
 
 if (window.innerWidth <= 600) {
   document.body.classList.add("no-scroll");
@@ -175,4 +226,13 @@ clearBtn.addEventListener("click", function () {
   if (window.innerWidth <= 600) {
     document.body.classList.add("no-scroll");
   }
+});
+
+window.addEventListener("load", async () => {
+  // 1) restore without fetching (fast, avoids 429)
+  if (restoreStateIfAny()) return;
+
+  // 2) otherwise load from API and render normally
+  await loadMoviesOnce();
+  displayMovies(allMovies);
 });

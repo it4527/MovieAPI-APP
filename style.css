@@ -183,6 +183,7 @@ input#movieInput:focus {
     text-decoration: none;
     border-radius: 8px;
     transition: 0.3s;
+    gap: 10px;
 
 }
 
@@ -195,12 +196,14 @@ input#movieInput:focus {
     border-radius: 8px;
     transition: 0.3s;
 
+
 }
 
 .favorites-movies {
     justify-content: center;
     display: flex;
     margin-top: 20px;
+    gap: 10px;
 }
 
 

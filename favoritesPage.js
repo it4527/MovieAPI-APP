@@ -53,7 +53,6 @@ function render() {
       <img src="${imageUrl}" alt="${title}">
       <div>
         <h3>${title}</h3>
-        ${type ? `<p>Type: ${type}</p>` : ""}
         ${genres ? `<p>Genre: ${genres}</p>` : ""}
         ${description ? `<p>${description}</p>` : ""}
       </div>
