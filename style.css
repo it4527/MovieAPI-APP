@@ -246,14 +246,14 @@ footer {
         height: auto;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        zoom: 0.9;
     }
 
 
 
     #movies {
-        height: 100vh;
-        overflow: auto;
+        height: auto;
+        overflow: visible;
+        padding: 12px;
     }
 
 
@@ -280,6 +280,12 @@ footer {
 
     .clear-btn {
         top: 75%;
+    }
+
+    .movie {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
 
