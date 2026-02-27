@@ -246,6 +246,7 @@ footer {
         height: auto;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        zoom: 0.9;
     }
 
 

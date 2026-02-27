@@ -7,6 +7,10 @@ const movieInput = document.getElementById("movieInput");
 // Global variable to store all movies
 let allMovies = [];
 
+let filteredMovies = [];
+let visibleCount = 15; // how many movies to show
+const STEP = 15; // how many to add each time
+
 //Favorite movies array to store the user's favorite movies
 const FAVORITES_KEY = "favorites";
 
@@ -81,44 +85,53 @@ async function loadTopMovies() {
 
 // Display function
 function displayMovies(movies) {
+  filteredMovies = Array.isArray(movies) ? movies : [];
+  visibleCount = STEP; // reset when new search
   moviesDiv.innerHTML = "";
+  renderChunk();
+}
 
-  if (!movies || movies.length === 0) {
-    moviesDiv.innerHTML = `<p>No movies found!</p>`;
-    return;
-  }
+function renderChunk() {
+  const slice = filteredMovies.slice(0, visibleCount);
 
-  movies.forEach((movie) => {
-    // Title
-    const title = movie.primaryTitle || movie.originalTitle || "Untitled";
+  moviesDiv.innerHTML = slice
+    .map((movie) => {
+      const title = movie.primaryTitle || movie.originalTitle || "Untitled";
 
-    // Image
-    const imageUrl =
-      movie.primaryImage ||
-      movie.thumbnails?.[0]?.url ||
-      "https://via.placeholder.com/150x220?text=No+Image";
+      const imageUrl =
+        movie.primaryImage ||
+        movie.thumbnails?.[0]?.url ||
+        "https://via.placeholder.com/150x220?text=No+Image";
 
-    // Optional fields (only if API has them)
-    const description = movie.description || "";
-    const type = movie.type || "";
-    const genres = movie.genres || "";
-    const id = movie.id || "";
+      const id = movie.id || "";
 
-    const movieCard = `
+      return `
       <div class="movie">
-        <img src="${imageUrl}" alt="${title}">
+        <img src="${imageUrl}" alt="${title}" loading="lazy">
         <div>
           <h3>${title}</h3>
-          ${type ? `<p>Type: ${type}</p>` : ""}
-          ${genres ? `<p>Genre: ${genres}</p>` : ""}
-          ${description ? `<p>${description}</p>` : ""}
+          <p>Type: ${movie.type || "N/A"}</p>
+          <p>Genre: ${movie.genres?.join(", ") || "N/A"}</p>
           <button class="fav-btn" data-id="${id}">Favorite</button>
         </div>
       </div>
     `;
+    })
+    .join("");
 
-    moviesDiv.innerHTML += movieCard;
-  });
+  // Add Load More button if more movies exist
+  if (visibleCount < filteredMovies.length) {
+    moviesDiv.innerHTML += `
+      <button id="loadMore" style="width:100%; padding:12px; margin-top:15px;">
+        Load More
+      </button>
+    `;
+
+    document.getElementById("loadMore").onclick = () => {
+      visibleCount += STEP;
+      renderChunk();
+    };
+  }
 }
 
 // When user clicks Search button
