@@ -4,6 +4,10 @@ const moviesDiv = document.getElementById("movies");
 const clearBtn = document.getElementById("clear");
 const movieInput = document.getElementById("movieInput");
 
+if (window.innerWidth <= 600) {
+  document.body.classList.add("no-scroll");
+}
+
 // Global variable to store all movies
 let allMovies = [];
 
@@ -92,6 +96,7 @@ function displayMovies(movies) {
 }
 
 function renderChunk() {
+  document.body.classList.remove("no-scroll");
   const slice = filteredMovies.slice(0, visibleCount);
 
   moviesDiv.innerHTML = slice
@@ -131,6 +136,8 @@ function renderChunk() {
       visibleCount += STEP;
       renderChunk();
     };
+
+    document.body.classList.remove("no-scroll");
   }
 }
 
@@ -164,4 +171,8 @@ movieInput.addEventListener("keydown", (event) => {
 clearBtn.addEventListener("click", function () {
   moviesDiv.innerHTML = "";
   movieInput.value = "";
+
+  if (window.innerWidth <= 600) {
+    document.body.classList.add("no-scroll");
+  }
 });
