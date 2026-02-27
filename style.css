@@ -402,10 +402,12 @@ footer {
         width: 100%;
     }
 
-
-
-
-
+    .poster {
+        width: 100%;
+        max-width: 240px;
+        height: auto;
+        margin: auto;
+    }
 
 }
 
