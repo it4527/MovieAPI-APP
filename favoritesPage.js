@@ -26,17 +26,39 @@ function render() {
     return;
   }
 
- 
   favs.forEach((movie) => {
+    const title =
+      movie.primaryTitle || movie.originalTitle || movie.title || movie.name;
+
+    if (!title) {
+      console.warn("Favorite item missing title fields:", movie);
+      return; // skip broken entry
+    }
+
+    const imageUrl =
+      movie.primaryImage ||
+      movie.image ||
+      movie.thumbnails?.[0]?.url ||
+      "https://via.placeholder.com/150x220?text=No+Image";
+
+    const description = movie.description || "";
+    const type = movie.type || "";
+    const genres = Array.isArray(movie.genres)
+      ? movie.genres.join(", ")
+      : movie.genres || "";
+    const id = movie.id || "";
+
     favDiv.innerHTML += `
-      <div class="movie">
-        <img src="${movie.image}" alt="${movie.title}" style="width:150px">
-        <h3>${movie.title} (${movie.year})</h3>
-        <p>Rating: ${movie.rating}</p>
-        <p>Genre: ${movie.genre}</p>
-        <p>Rank: ${movie.rank}</p>
+    <div class="movie">
+      <img src="${imageUrl}" alt="${title}">
+      <div>
+        <h3>${title}</h3>
+        ${type ? `<p>Type: ${type}</p>` : ""}
+        ${genres ? `<p>Genre: ${genres}</p>` : ""}
+        ${description ? `<p>${description}</p>` : ""}
       </div>
-    `;
+    </div>
+  `;
   });
 }
 

@@ -49,7 +49,6 @@ body {
     background-repeat: no-repeat;
     min-height: 100vh;
     margin: 0;
-
 }
 
 
@@ -63,11 +62,19 @@ body {
 .movie {
     background: rgba(255, 255, 255, 0.795);
     justify-items: center;
-    padding: 15px;
+    padding: 20px;
     border: 2px solid black;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+
+
+}
+
+.movie img {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
 }
 
 
@@ -198,23 +205,23 @@ input#movieInput:focus {
 
 
 #toast {
-  position: fixed;
-  bottom: 25px;
-  right: 20px;
-  background: #222;
-  color: white;
-  padding: 14px 22px;
-  border-radius: 8px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 0.3s;
-  font-weight: bold;
-  z-index: 999;
+    position: fixed;
+    bottom: 25px;
+    right: 20px;
+    background: #222;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.3s;
+    font-weight: bold;
+    z-index: 999;
 }
 
 #toast.show {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 
@@ -233,6 +240,21 @@ footer {
 
 /* ====== Phone ====== */
 @media (max-width: 600px) {
+
+
+    html, body {
+        height: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+
+    #movies {
+        height: 100vh;
+        overflow: auto;
+    }
+
 
     header {
         font-size: 25px;
@@ -258,6 +280,8 @@ footer {
     .clear-btn {
         top: 75%;
     }
+
+
 
 
 

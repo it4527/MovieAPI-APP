@@ -89,18 +89,34 @@ function displayMovies(movies) {
   }
 
   movies.forEach((movie) => {
+    // Title
+    const title = movie.primaryTitle || movie.originalTitle || "Untitled";
+
+    // Image
+    const imageUrl =
+      movie.primaryImage ||
+      movie.thumbnails?.[0]?.url ||
+      "https://via.placeholder.com/150x220?text=No+Image";
+
+    // Optional fields (only if API has them)
+    const description = movie.description || "";
+    const type = movie.type || "";
+    const genres = movie.genres || "";
+    const id = movie.id || "";
+
     const movieCard = `
       <div class="movie">
-        <img src="${movie.image}" alt="${movie.title}">
+        <img src="${imageUrl}" alt="${title}">
         <div>
-          <h3>${movie.title} (${movie.year})</h3>
-          <p>Rating: ${movie.rating}</p>
-          <p>Genre: ${movie.genre}</p>
-          <p>Rank: ${movie.rank}</p>
-          <button class="fav-btn" data-id="${movie.id}">Favorite</button>
+          <h3>${title}</h3>
+          ${type ? `<p>Type: ${type}</p>` : ""}
+          ${genres ? `<p>Genre: ${genres}</p>` : ""}
+          ${description ? `<p>${description}</p>` : ""}
+          <button class="fav-btn" data-id="${id}">Favorite</button>
         </div>
       </div>
     `;
+
     moviesDiv.innerHTML += movieCard;
   });
 }
@@ -115,7 +131,9 @@ searchBtn.addEventListener("click", async () => {
 
   // Filter movies by search term
   const filtered = allMovies.filter((movie) =>
-    movie.title.toLowerCase().includes(searchTerm),
+    (movie.primaryTitle || movie.originalTitle || "")
+      .toLowerCase()
+      .includes(searchTerm),
   );
 
   displayMovies(filtered);
