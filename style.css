@@ -288,6 +288,25 @@ footer {
         gap: 10px;
     }
 
+    .movie img {
+        width: 100%;
+        max-width: 240px;
+        /* keeps posters reasonable */
+        height: auto;
+        align-self: center;
+        /* centers poster */
+        object-fit: cover;
+    }
+
+    .movie h3 {
+        margin: 0;
+        text-align: center;
+    }
+
+    .movie p, .movie button {
+        width: 100%;
+    }
+
 
 
 
