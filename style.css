@@ -228,6 +228,87 @@ input#movieInput:focus {
 }
 
 
+.poster {
+    position: relative;
+    width: 150px;
+    height: 220px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: #fff;
+    background: rgba(0, 0, 0, .35);
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+
+.poster:hover .play-overlay {
+    opacity: 1;
+}
+
+/* modal */
+.modal.hidden {
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .65);
+}
+
+.modal-content {
+    position: relative;
+    width: min(900px, 92vw);
+    aspect-ratio: 16/9;
+    margin: 10vh auto 0;
+    background: #000;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+#trailerFrame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    background: rgba(255, 255, 255, .15);
+    color: #fff;
+    border: 0;
+    padding: 8px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
 
 footer {
     position: fixed;

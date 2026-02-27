@@ -161,19 +161,77 @@ function renderChunk() {
 
       const id = movie.id || "";
 
+      const trailer = movie.trailer || "";
+
       return `
       <div class="movie">
-        <img src="${imageUrl}" alt="${title}" loading="lazy">
-        <div>
-          <h3>${title}</h3>
-          <p>Type: ${movie.type || "N/A"}</p>
-          <p>Genre: ${movie.genres?.join(", ") || "N/A"}</p>
-          <button class="fav-btn" data-id="${id}">Favorite</button>
+          <div class="poster" data-trailer="${trailer}">
+            <img src="${imageUrl}" alt="${title}" loading="lazy">
+            <div class="play-overlay">▶</div>
+          </div>
+
+          <div>
+            <h3>${title}</h3>
+            <p>Type: ${movie.type || "N/A"}</p>
+            <p>Genre: ${movie.genres?.join(", ") || "N/A"}</p>
+            <button class="fav-btn" data-id="${id}">Favorite</button>
+          </div>
         </div>
-      </div>
     `;
     })
     .join("");
+
+  const modal = document.getElementById("trailerModal");
+  const frame = document.getElementById("trailerFrame");
+  const closeTrailerBtn = document.getElementById("closeTrailer");
+
+  function toYouTubeId(value) {
+    if (!value) return "";
+    const v = String(value).trim();
+
+    // already an ID (no spaces, no slashes, typical length 11)
+    if (/^[a-zA-Z0-9_-]{11}$/.test(v)) return v;
+
+    // handle urls like https://youtu.be/ID or ...watch?v=ID
+    const m1 = v.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+    if (m1) return m1[1];
+    const m2 = v.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+    if (m2) return m2[1];
+
+    return "";
+  }
+
+  function openTrailer(ytId) {
+    frame.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`;
+    modal.classList.remove("hidden");
+  }
+
+  function closeTrailer() {
+    modal.classList.add("hidden");
+    frame.src = "";
+  }
+
+  moviesDiv.addEventListener("click", (e) => {
+    const poster = e.target.closest(".poster");
+    if (!poster) return;
+
+    const ytId = toYouTubeId(poster.dataset.trailer);
+    if (!ytId) {
+      // optional: show toast
+      // showToast("No trailer available");
+      return;
+    }
+
+    openTrailer(ytId);
+  });
+
+  closeTrailerBtn.addEventListener("click", closeTrailer);
+  modal
+    .querySelector(".modal-backdrop")
+    .addEventListener("click", closeTrailer);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeTrailer();
+  });
 
   // Add Load More button if more movies exist
   if (visibleCount < filteredMovies.length) {
